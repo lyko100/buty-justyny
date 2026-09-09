@@ -11,7 +11,15 @@ app = Flask(__name__, static_folder="static")
 HERE = os.path.dirname(__file__)
 MANIFEST_PATH = os.path.join(HERE, "static", "shoes", "manifest.json")
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
+# Vercel Postgres wstrzykuje różne nazwy zmiennych zależnie od integracji —
+# bierzemy pierwszą, która jest ustawiona.
+DATABASE_URL = next(
+    (os.environ[k] for k in (
+        "DATABASE_URL", "POSTGRES_URL", "POSTGRES_URL_NON_POOLING",
+        "DATABASE_URL_UNPOOLED", "POSTGRES_PRISMA_URL",
+    ) if os.environ.get(k)),
+    None,
+)
 IS_PG = bool(DATABASE_URL and DATABASE_URL.startswith(("postgres://", "postgresql://")))
 
 if IS_PG:

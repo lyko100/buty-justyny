@@ -145,9 +145,8 @@
       <div class="done">
         <div class="big">💛</div>
         <h1>To wszystko!</h1>
-        <p>Dziękujemy. Wszystkie odpowiedzi są zapisane.</p>
+        <p>Dziękujemy. Wszystkie odpowiedzi są zapisane —<br />możesz zamknąć tę stronę.</p>
         <p id="doneStats" style="margin-top:10px;font-weight:800;color:var(--text)"></p>
-        <div class="mt"><a class="link" href="/wyniki">Zobacz wyniki</a></div>
       </div>
     `;
   }

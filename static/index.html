@@ -30,14 +30,14 @@
 
     <button class="big-btn" id="go">Zaczynamy →</button>
     <p class="center mt" style="font-size:.95rem">Możesz przerwać w każdej chwili — odpowiedzi zapisują się na bieżąco.</p>
-
-    <div class="center mt">
-      <a class="link" href="/wyniki">Podgląd wyników</a>
-    </div>
   </div>
 
   <script src="/static/app.js"></script>
   <script>
+    // Osobisty link (…?kto=Imię) prowadzi prosto do oceniania.
+    const who = new URLSearchParams(location.search).get("kto");
+    if (who) { location.replace("/oceniaj?kto=" + encodeURIComponent(who)); }
+
     const nameInput = document.getElementById("name");
     nameInput.value = getVoter() || "";
     document.getElementById("go").addEventListener("click", () => {
