@@ -30,7 +30,46 @@
   let lastVotedId = null;
   let photoIdx = 0;
 
-  render();
+  renderIntro();
+
+  // ─────────────────────────────  Instrukcja  ─────────────────────────────
+
+  function renderIntro() {
+    const total = shoes.length;
+    app.innerHTML = `
+      <div class="rate-top">
+        <div class="progress-text">Para 0 z ${total}</div>
+        <div class="bar"><i style="width:0%"></i></div>
+      </div>
+
+      <div class="screen">
+        <h2>Jak to działa</h2>
+
+        <div class="instr-row">
+          <span class="mark tap">📷</span>
+          <p>Kliknij na zdjęcie, żeby obejrzeć pozostałe zdjęcia tej samej pary butów.</p>
+        </div>
+        <div class="instr-row">
+          <span class="mark toss">✗</span>
+          <p>Kliknij <b>czerwony</b> przycisk, jeśli te buty chcesz <b>wyrzucić</b>.</p>
+        </div>
+        <div class="instr-row">
+          <span class="mark keep">✓</span>
+          <p>Kliknij <b>zielony</b> przycisk, jeśli te buty chcesz <b>zostawić</b>.</p>
+        </div>
+        <div class="instr-row">
+          <span class="mark tap">↩</span>
+          <p>Jeśli klikniesz coś przez pomyłkę, użyj <b>„Cofnij do poprzedniej pary"</b>.</p>
+        </div>
+
+        <p class="instr-q">Czy na pewno wszystko rozumiesz?</p>
+        <button class="big-btn" id="startBtn">Tak, rozumiem — zaczynamy →</button>
+      </div>
+    `;
+    document.getElementById("startBtn").addEventListener("click", render);
+  }
+
+  // ─────────────────────────────  Karta pary  ─────────────────────────────
 
   function render() {
     if (idx >= shoes.length) { renderDone(); return; }
@@ -47,11 +86,11 @@
 
       <div class="photo-stage" id="stage">
         <img id="photo" src="${shoe.photos[0]}" alt="" />
-        <button class="photo-nav prev" id="prevPhoto" aria-label="poprzednie zdjęcie">‹</button>
-        <button class="photo-nav next" id="nextPhoto" aria-label="następne zdjęcie">›</button>
+        <button class="photo-nav prev" id="prevPhoto" aria-label="poprzednie zdjęcie"></button>
+        <button class="photo-nav next" id="nextPhoto" aria-label="następne zdjęcie"></button>
         <div class="dots" id="dots"></div>
       </div>
-      <div class="photo-hint">${shoe.photos.length > 1 ? "dotknij zdjęcia, żeby zobaczyć kolejne" : "&nbsp;"}</div>
+      <div class="photo-hint">${shoe.photos.length > 1 ? "dotknij zdjęcia, żeby zobaczyć kolejne" : ""}</div>
 
       <div class="choices">
         <button class="choice toss" id="toss"><span class="icon">✗</span>DO WYRZUCENIA</button>
@@ -59,7 +98,7 @@
       </div>
 
       <div class="undo">
-        <button id="undo" ${lastVotedId ? "" : "disabled"}>↩ Cofnij poprzednią</button>
+        <button id="undo" ${lastVotedId ? "" : "disabled"}>↩ Cofnij do poprzedniej pary</button>
       </div>
     `;
 
@@ -68,7 +107,6 @@
     const stage = document.getElementById("stage");
     stage.addEventListener("click", (e) => {
       if (e.target.id === "prevPhoto") { step(-1); return; }
-      if (e.target.id === "nextPhoto") { step(1); return; }
       step(1);
     });
 

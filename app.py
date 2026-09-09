@@ -94,7 +94,13 @@ def index():
 
 @app.route("/oceniaj")
 def rate_page():
-    return send_from_directory("static", "oceniaj.html")
+    with open(os.path.join(HERE, "static", "oceniaj.html"), encoding="utf-8") as f:
+        html = f.read()
+    kto = request.args.get("kto", "")
+    title = "Oceniaj buty (test)" if "test" in kto.lower() else "Oceniaj buty"
+    html = html.replace("<title>Oceniaj buty</title>", f"<title>{title}</title>")
+    html = html.replace('content="Oceniaj buty"', f'content="{title}"')
+    return html
 
 
 @app.route("/wyniki")

@@ -2,13 +2,15 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
   <title>Oceniaj buty</title>
+  <meta property="og:title" content="Oceniaj buty" />
+  <meta property="og:description" content="Kliknij, żeby zacząć oceniać buty." />
   <link rel="stylesheet" href="/static/style.css" />
 </head>
-<body>
-  <div class="wrap">
-    <div id="app"><p class="center" style="padding:40px 0">Ładuję buty…</p></div>
+<body class="fixed">
+  <div id="app" class="rate-screen">
+    <p class="center" style="margin:auto">Ładuję buty…</p>
   </div>
 
   <script src="/static/app.js"></script>
