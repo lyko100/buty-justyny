@@ -110,29 +110,27 @@ label { display: block; font-weight: 700; margin-bottom: 8px; }
 .mt { margin-top: 18px; }
 
 /* ── Rating screen — fills the viewport, never scrolls ── */
-html:has(body.fixed) { overflow: hidden; }
-body.fixed {
-  overflow: hidden;
-  position: fixed;
-  inset: 0;
-  width: 100%;
-}
+html:has(body.fixed) { overflow: hidden; height: 100%; }
+body.fixed { overflow: hidden; height: 100%; }
 
 .rate-screen {
-  max-width: 560px;
+  max-width: 460px;
   margin: 0 auto;
   height: 100vh;
   height: 100svh;
   height: 100%;    /* body is position:fixed inset:0, so 100% == visible area */
   display: flex;
   flex-direction: column;
-  padding: 10px 14px max(12px, env(safe-area-inset-bottom));
-  gap: 10px;
+  padding: 8px 14px max(10px, env(safe-area-inset-bottom));
+  gap: 8px;
 }
 
 .rate-top { flex: 0 0 auto; }
-.progress-text { font-weight: 800; text-align: center; margin-bottom: 7px; }
-.bar { height: 9px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.progress-text {
+  font-weight: 700; text-align: center; margin-bottom: 5px;
+  font-size: .8rem; color: var(--muted); letter-spacing: .02em;
+}
+.bar { height: 5px; background: var(--line); border-radius: 999px; overflow: hidden; }
 .bar > i { display: block; height: 100%; background: var(--accent); border-radius: 999px; transition: width .25s; }
 
 .photo-stage {
@@ -140,8 +138,7 @@ body.fixed {
   flex: 1 1 auto;
   min-height: 0;
   background: #efe9df;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  border-radius: 14px;
   overflow: hidden;
   user-select: none;
 }
@@ -159,34 +156,34 @@ body.fixed {
 .photo-nav.prev { left: 0; }
 .photo-nav.next { right: 0; }
 .dots {
-  position: absolute; left: 0; right: 0; bottom: 10px;
-  display: flex; gap: 7px; justify-content: center;
+  position: absolute; left: 0; right: 0; bottom: 9px;
+  display: flex; gap: 6px; justify-content: center;
   pointer-events: none;
 }
-.dots > i { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,.22); }
-.dots > i.on { background: var(--accent); }
+.dots > i { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,.25); }
+.dots > i.on { background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.15); }
 
 .photo-hint {
   flex: 0 0 auto;
-  text-align: center; color: var(--muted); font-weight: 700;
-  font-size: .9rem; min-height: 1.1em;
+  text-align: center; color: var(--hint); font-weight: 600;
+  font-size: .72rem; min-height: .9em; letter-spacing: .01em;
 }
 
-.choices { flex: 0 0 auto; display: flex; gap: 12px; }
+.choices { flex: 0 0 auto; display: flex; gap: 10px; }
 .choice {
   flex: 1;
   border: none;
-  border-radius: var(--radius);
-  padding: 14px 6px;
+  border-radius: 13px;
+  padding: 12px 6px;
   font-family: inherit;
   font-weight: 800;
-  font-size: .95rem;
-  letter-spacing: .01em;
+  font-size: .8rem;
+  letter-spacing: .03em;
   white-space: nowrap;
   cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
 }
-.choice .icon { font-size: 1.9rem; line-height: 1; }
+.choice .icon { font-size: 1.35rem; line-height: 1; }
 .choice.toss { background: var(--toss-soft); color: var(--toss); }
 .choice.keep { background: var(--keep-soft); color: var(--keep); }
 .choice:active { transform: translateY(1px); }
@@ -194,10 +191,10 @@ body.fixed {
 .undo { flex: 0 0 auto; text-align: center; }
 .undo button {
   background: none; border: none; font-family: inherit;
-  color: var(--muted); font-weight: 700; font-size: .9rem; cursor: pointer;
-  padding: 6px 12px;
+  color: var(--muted); font-weight: 700; font-size: .8rem; cursor: pointer;
+  padding: 4px 12px;
 }
-.undo button:disabled { opacity: .35; cursor: default; }
+.undo button:disabled { opacity: .3; cursor: default; }
 
 /* instruction + done screens share the framed area */
 .screen {
@@ -207,22 +204,23 @@ body.fixed {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
   padding: 8px 2px;
 }
-.screen h2 { text-align: center; }
-.instr-row { display: flex; align-items: flex-start; gap: 12px; }
+.screen h2 { text-align: center; font-size: 1.05rem; }
+.screen .big-btn { font-size: 1.02rem; padding: 15px; border-radius: 14px; }
+.instr-row { display: flex; align-items: flex-start; gap: 11px; }
 .instr-row .mark {
   flex: 0 0 auto;
-  width: 38px; height: 38px; border-radius: 10px;
+  width: 32px; height: 32px; border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem; font-weight: 800;
+  font-size: 1.05rem; font-weight: 800;
 }
 .instr-row .mark.toss { background: var(--toss-soft); color: var(--toss); }
 .instr-row .mark.keep { background: var(--keep-soft); color: var(--keep); }
 .instr-row .mark.tap  { background: var(--line); }
-.instr-row p { color: var(--text); font-weight: 600; margin-top: 4px; }
-.instr-q { text-align: center; font-weight: 800; margin-top: 4px; }
+.instr-row p { color: var(--text); font-weight: 600; font-size: .9rem; margin-top: 3px; }
+.instr-q { text-align: center; font-weight: 800; font-size: .95rem; margin-top: 2px; }
 
 .done { text-align: center; padding: 20px 10px; margin: auto; }
 .done .big { font-size: 3.4rem; }

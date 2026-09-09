@@ -10,6 +10,7 @@
   function lockHeight() {
     const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
     app.style.height = h + "px";
+    window.scrollTo(0, 0);
   }
   lockHeight();
   window.addEventListener("resize", lockHeight);
@@ -70,7 +71,7 @@
           <p>Kliknij <b>zielony</b> przycisk, jeśli te buty chcesz <b>zostawić</b>.</p>
         </div>
         <div class="instr-row">
-          <span class="mark tap">↩</span>
+          <span class="mark tap">←</span>
           <p>Jeśli klikniesz coś przez pomyłkę, użyj <b>„Cofnij do poprzedniej pary"</b>.</p>
         </div>
 
@@ -110,7 +111,7 @@
       </div>
 
       <div class="undo">
-        <button id="undo" ${lastVotedId ? "" : "disabled"}>↩ Cofnij do poprzedniej pary</button>
+        <button id="undo" ${lastVotedId ? "" : "disabled"}>← Cofnij do poprzedniej pary</button>
       </div>
     `;
 
