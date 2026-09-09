@@ -110,16 +110,23 @@ label { display: block; font-weight: 700; margin-bottom: 8px; }
 .mt { margin-top: 18px; }
 
 /* ── Rating screen — fills the viewport, never scrolls ── */
-body.fixed { overflow: hidden; }
+html:has(body.fixed) { overflow: hidden; }
+body.fixed {
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+}
 
 .rate-screen {
   max-width: 560px;
   margin: 0 auto;
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
+  height: 100%;    /* body is position:fixed inset:0, so 100% == visible area */
   display: flex;
   flex-direction: column;
-  padding: max(10px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom));
+  padding: 10px 14px max(12px, env(safe-area-inset-bottom));
   gap: 10px;
 }
 

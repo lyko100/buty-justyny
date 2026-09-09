@@ -4,6 +4,18 @@
 
   if (!voter) { location.href = "/"; return; }
 
+  // Lock the screen to exactly the visible area so nothing is ever clipped
+  // and there is never a scrollbar — on iOS Safari CSS viewport units are
+  // unreliable while the toolbar animates.
+  function lockHeight() {
+    const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    app.style.height = h + "px";
+  }
+  lockHeight();
+  window.addEventListener("resize", lockHeight);
+  window.addEventListener("orientationchange", () => setTimeout(lockHeight, 200));
+  if (window.visualViewport) window.visualViewport.addEventListener("resize", lockHeight);
+
   let shoes = [];
   try {
     shoes = await loadShoes();
