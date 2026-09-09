@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Buty: zostają czy na wyrzut?</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="wrap start">
+    <div class="logo">👟</div>
+    <h1>Buty: zostają<br />czy na wyrzut?</h1>
+    <p class="center">Obejrzysz po kolei zdjęcia każdej pary butów i zdecydujesz, co z nią zrobić.</p>
+
+    <div class="how">
+      <div class="how-item keep">
+        <span class="mark">✓</span>
+        <small>zielony = <br />ZOSTAJE</small>
+      </div>
+      <div class="how-item toss">
+        <span class="mark">✗</span>
+        <small>czerwony = <br />NA WYRZUT</small>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="name">Twoje imię</label>
+      <input type="text" id="name" placeholder="np. Justyna" autocomplete="off" />
+    </div>
+
+    <button class="big-btn" id="go">Zaczynamy →</button>
+    <p class="center mt" style="font-size:.95rem">Możesz przerwać w każdej chwili — odpowiedzi zapisują się na bieżąco.</p>
+
+    <div class="center mt">
+      <a class="link" href="/wyniki">Podgląd wyników</a>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+  <script>
+    const nameInput = document.getElementById("name");
+    nameInput.value = getVoter() || "";
+    document.getElementById("go").addEventListener("click", () => {
+      const name = nameInput.value.trim();
+      if (!name) { nameInput.focus(); return; }
+      setVoter(name);
+      location.href = "/oceniaj?kto=" + encodeURIComponent(name);
+    });
+    nameInput.addEventListener("keydown", (e) => { if (e.key === "Enter") document.getElementById("go").click(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+shoes.db
+.env
+.DS_Store
+
+# surowe, nieskompresowane zdjęcia — NIE trafiają do repo (za duże).
+# Skrypt import_shoes.py robi z nich lekkie kopie w static/shoes/.
+buty Justyny - zdjecia/
+raw-photos/
+*.HEIC
+*.heic
