@@ -186,7 +186,7 @@ def api_export():
     out = io.StringIO()
     w = csv.writer(out)
     w.writerow(["para", "kto", "decyzja", "kiedy"])
-    pl = {"keep": "ZOSTAJE", "toss": "WYRZUCAMY"}
+    pl = {"keep": "ZOSTAJĄ", "toss": "DO WYRZUCENIA"}
     for r in rows:
         w.writerow([labels.get(r["shoe_id"], r["shoe_id"]), r["voter"],
                     pl.get(r["decision"], r["decision"]), r["created_at"]])

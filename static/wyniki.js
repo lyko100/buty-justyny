@@ -53,14 +53,14 @@
     app.innerHTML = `
       ${voterPicker()}
       <div class="stats">
-        <div class="stat keep"><b>${keep}</b><small>zostaje</small></div>
-        <div class="stat toss"><b>${toss}</b><small>na wyrzut</small></div>
+        <div class="stat keep"><b>${keep}</b><small>zostają</small></div>
+        <div class="stat toss"><b>${toss}</b><small>do wyrzucenia</small></div>
         <div class="stat"><b>${none}</b><small>bez decyzji</small></div>
       </div>
       <div class="chips">
         ${chip("all", "Wszystkie")}
         ${chip("keep", "Zostają")}
-        ${chip("toss", "Na wyrzut")}
+        ${chip("toss", "Do wyrzucenia")}
         ${chip("none", "Bez decyzji")}
       </div>
       <div class="grid">
@@ -106,7 +106,7 @@
 
   function shoeCard(s, decision) {
     const d = decision || "none";
-    const txt = d === "keep" ? "ZOSTAJE" : d === "toss" ? "NA WYRZUT" : "bez decyzji";
+    const txt = d === "keep" ? "ZOSTAJĄ" : d === "toss" ? "DO WYRZUCENIA" : "bez decyzji";
     return `
       <div class="shoe" data-id="${esc(s.id)}">
         <img class="thumb" src="${esc(s.photos[0])}" alt="" loading="lazy" />
@@ -127,7 +127,7 @@
 
     function draw() {
       const d = decision || "none";
-      const txt = d === "keep" ? "✓ ZOSTAJE" : d === "toss" ? "✗ NA WYRZUT" : "bez decyzji";
+      const txt = d === "keep" ? "✓ ZOSTAJĄ" : d === "toss" ? "✗ DO WYRZUCENIA" : "bez decyzji";
       box.innerHTML = `
         <div class="cap">${esc(shoe.label)} — ${txt} &nbsp; (${i + 1}/${shoe.photos.length})</div>
         <img src="${esc(shoe.photos[i])}" alt="" />

@@ -1,12 +1,12 @@
-# 👟 Buty: zostają czy na wyrzut?
+# 👟 Buty: zostają czy do wyrzucenia?
 
 Mała aplikacja w stylu Tindera do przeglądania butów. Justyna ogląda po kolei
-zdjęcia każdej pary i klika **✓ ZOSTAJE** albo **✗ NA WYRZUT**. Wszystkie
+zdjęcia każdej pary i klika **✓ ZOSTAJĄ** albo **✗ DO WYRZUCENIA**. Wszystkie
 odpowiedzi lądują w bazie, a Marta ogląda je na żywo na stronie **/wyniki**.
 
 - `/` – ekran startowy (podajesz imię)
 - `/oceniaj?kto=Imię` – przeglądanie butów, dwa duże przyciski
-- `/wyniki` – podsumowanie: co zostaje, co na wyrzut, filtr, podgląd zdjęć, CSV
+- `/wyniki` – podsumowanie: co zostaje, co do wyrzucenia, filtr, podgląd zdjęć, CSV
 
 Stos: Flask (Python) + zwykły HTML/JS + Postgres, hosting na Vercel
 (`@vercel/python`). Zoptymalizowane pod telefon.

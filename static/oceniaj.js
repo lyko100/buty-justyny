@@ -54,8 +54,8 @@
       <div class="photo-hint">${shoe.photos.length > 1 ? "dotknij zdjęcia, żeby zobaczyć kolejne" : "&nbsp;"}</div>
 
       <div class="choices">
-        <button class="choice toss" id="toss"><span class="icon">✗</span>NA WYRZUT</button>
-        <button class="choice keep" id="keep"><span class="icon">✓</span>ZOSTAJE</button>
+        <button class="choice toss" id="toss"><span class="icon">✗</span>DO WYRZUCENIA</button>
+        <button class="choice keep" id="keep"><span class="icon">✓</span>ZOSTAJĄ</button>
       </div>
 
       <div class="undo">
@@ -138,7 +138,7 @@
     api("/api/votes?voter=" + encodeURIComponent(voter)).then((v) => {
       v.votes.forEach((r) => { r.decision === "keep" ? keep++ : toss++; });
       const s = document.getElementById("doneStats");
-      if (s) s.textContent = `Zostaje: ${keep} · Na wyrzut: ${toss}`;
+      if (s) s.textContent = `Zostają: ${keep} · Do wyrzucenia: ${toss}`;
     }).catch(() => {});
 
     app.innerHTML = `
