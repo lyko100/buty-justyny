@@ -1,7 +1,9 @@
 import os
 import io
+import re
 import csv
 import json
+import time
 import uuid
 import urllib.parse
 
@@ -11,6 +13,9 @@ app = Flask(__name__, static_folder="static")
 
 HERE = os.path.dirname(__file__)
 MANIFEST_PATH = os.path.join(HERE, "static", "shoes", "manifest.json")
+
+# Zmienia się przy każdym deployu -> przeglądarka pobiera świeży CSS/JS
+ASSET_V = (os.environ.get("VERCEL_GIT_COMMIT_SHA") or str(int(time.time())))[:8]
 
 # Vercel Postgres wstrzykuje różne nazwy zmiennych zależnie od integracji —
 # bierzemy pierwszą, która jest ustawiona.
@@ -87,25 +92,35 @@ def _setup():
 
 # ─────────────────────────────  Pages  ─────────────────────────────
 
+def render_page(filename, replacements=None):
+    with open(os.path.join(HERE, "static", filename), encoding="utf-8") as f:
+        html = f.read()
+    # dopisz ?v=... do lokalnych plików css/js (cache-busting)
+    html = re.sub(r'(/static/[\w./-]+\.(?:css|js))"', rf'\1?v={ASSET_V}"', html)
+    for old, new in (replacements or {}).items():
+        html = html.replace(old, new)
+    return Response(html, mimetype="text/html",
+                    headers={"Cache-Control": "no-store, must-revalidate"})
+
+
 @app.route("/")
 def index():
-    return send_from_directory("static", "index.html")
+    return render_page("index.html")
 
 
 @app.route("/oceniaj")
 def rate_page():
-    with open(os.path.join(HERE, "static", "oceniaj.html"), encoding="utf-8") as f:
-        html = f.read()
     kto = request.args.get("kto", "")
     title = "Oceniaj buty (test)" if "test" in kto.lower() else "Oceniaj buty"
-    html = html.replace("<title>Oceniaj buty</title>", f"<title>{title}</title>")
-    html = html.replace('content="Oceniaj buty"', f'content="{title}"')
-    return html
+    return render_page("oceniaj.html", {
+        "<title>Oceniaj buty</title>": f"<title>{title}</title>",
+        'content="Oceniaj buty"': f'content="{title}"',
+    })
 
 
 @app.route("/wyniki")
 def results_page():
-    return send_from_directory("static", "wyniki.html")
+    return render_page("wyniki.html")
 
 
 # ─────────────────────────────  API  ─────────────────────────────
