@@ -3,6 +3,7 @@ import io
 import csv
 import json
 import uuid
+import urllib.parse
 
 from flask import Flask, request, jsonify, send_from_directory, Response
 
@@ -13,13 +14,24 @@ MANIFEST_PATH = os.path.join(HERE, "static", "shoes", "manifest.json")
 
 # Vercel Postgres wstrzykuje różne nazwy zmiennych zależnie od integracji —
 # bierzemy pierwszą, która jest ustawiona.
-DATABASE_URL = next(
+def _clean_dsn(url):
+    """Supabase dokleja parametry (np. ?supa=base-pooler.x), których libpq nie
+    rozumie — zostawiamy tylko te, które psycopg2 akceptuje."""
+    if not url:
+        return url
+    p = urllib.parse.urlsplit(url)
+    allowed = {"sslmode", "connect_timeout", "application_name", "options", "target_session_attrs"}
+    q = [(k, v) for k, v in urllib.parse.parse_qsl(p.query) if k in allowed]
+    return urllib.parse.urlunsplit((p.scheme, p.netloc, p.path, urllib.parse.urlencode(q), ""))
+
+
+DATABASE_URL = _clean_dsn(next(
     (os.environ[k] for k in (
         "DATABASE_URL", "POSTGRES_URL", "POSTGRES_URL_NON_POOLING",
         "DATABASE_URL_UNPOOLED", "POSTGRES_PRISMA_URL",
     ) if os.environ.get(k)),
     None,
-)
+))
 IS_PG = bool(DATABASE_URL and DATABASE_URL.startswith(("postgres://", "postgresql://")))
 
 if IS_PG:
